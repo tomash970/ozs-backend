@@ -7,6 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Laravel passport protective equipment take over rest api (study)
+## Laravel passport protective equipment take over RESTful api (study)
 
 
