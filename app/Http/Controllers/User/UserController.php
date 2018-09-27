@@ -39,7 +39,7 @@ class UserController extends ApiController
     public function store(Request $request)
     {
        $rules  = [
-            'name' => 'required|alpha_num|min:2|max:50',
+            'name' => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
             'email' => 'required|email|unique:users|max:50',
             'password' => 'required|min:6|confirmed',
             'unit_id' => 'required',
@@ -80,7 +80,7 @@ class UserController extends ApiController
 
 
         $rules = [
-            'name' => 'alpha_num|min:2|max:50',
+            'name' => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
             'email' => 'email|unique:users,email,' . $user->id,
             'password' => 'min:6|confirmed',
             'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,

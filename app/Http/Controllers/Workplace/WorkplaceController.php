@@ -29,7 +29,7 @@ class WorkplaceController extends ApiController
     public function store(Request $request)
     {
         $rules = [
-            'name'            => 'required|alpha_num|max:50',
+            'name'            => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
             'specific_number' => 'required|integer|digits:6',
         ];
 
@@ -58,6 +58,13 @@ class WorkplaceController extends ApiController
      */
     public function update(Request $request, Workplace $workplace)
     {
+        $rules = [
+            'name'            => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'specific_number' => 'required|integer|digits:6',
+        ];
+
+        $this->validate($request, $rules);
+
         $workplace->fill($request->only([
             'name',
             'specific_number'

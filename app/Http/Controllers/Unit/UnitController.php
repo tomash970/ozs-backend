@@ -29,9 +29,9 @@ class UnitController extends ApiController
     public function store(Request $request)
     {
         $rules = [
-            'name'          => 'required|alpha_num|min:2|max:50',
-            'city'          => 'required|alpha|min:2|max:50',
-            'street'        => 'required|alpha_num|min:2|max:50',
+            'name'          => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'city'          => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'street'        => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
             'street_number' => 'required|integer|max:999',
         ];
 
@@ -61,9 +61,9 @@ class UnitController extends ApiController
     public function update(Request $request, Unit $unit)
     {
         $rules = [
-           'name'          => 'alpha_num|min:2|max:50',
-           'city'          => 'alpha|min:2|max:50',
-           'street'        => 'alpha_num|min:2|max:50',
+           'name'          => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+           'city'          => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+           'street'        => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
            'street_number' => 'integer|max:999', 
         ];
         $this->validate($request, $rules);

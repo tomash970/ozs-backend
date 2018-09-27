@@ -82,7 +82,6 @@ $factory->define(Workplace::class, function (Faker $faker) {
 $factory->define(Transaction::class, function (Faker $faker) {
 
   $user      = User::all()->random();
-    //$unit      = Unit::all()->random();
 	$workplace = Workplace::all()->random();
 
 	$confirm_faker = $faker->randomElement([
@@ -97,12 +96,9 @@ $factory->define(Transaction::class, function (Faker $faker) {
     return [
     	'worker_name'    => $faker->name,
     	'user_id'        => $user->id,
-        // 'superior_id'    => $faker->numberBetween(1, 10),
-        // 'manager_id'    => $faker->numberBetween(11, 20),
-        // 'obtainer_id'    => $faker->numberBetween(21, 30),
-        'workplace_id'   => $workplace->id,
-        'confirmation'   => $confirm_faker,
-        'order_accepted' => $order_faker,
+      'workplace_id'   => $workplace->id,
+      'confirmation'   => $confirm_faker,
+      'order_accepted' => $order_faker,
 
     ];
 });
@@ -116,7 +112,6 @@ $factory->define(Chunk::class, function (Faker $faker) {
     return [
         'transaction_id'   => $transaction->id,
         'equipment_id'     => $equipment->id,
-        //'obtainer_id'      => $faker->numberBetween(21, 30),
         'status'           => $faker->randomElement([
                                           Chunk::EXCEPTIONAL, 
                                           Chunk::EXTRAORDINARY, 

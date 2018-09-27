@@ -29,10 +29,10 @@ Route::apiResource('units.chunks', 'Unit\UnitChunkController', ['only' =>['index
 Route::apiResource('transactions', 'Transaction\TransactionController', ['only' =>['index', 'show']]);
 Route::apiResource('transactions.equipments', 'Transaction\TransactionEquipmentController', ['only' =>['index']]);
 Route::apiResource('transactions.users', 'Transaction\TransactionUserController', ['only' =>['index']]);
-Route::apiResource('transactions.chunks', 'Transaction\TransactionChunkController', ['except' =>['create', 'edit']]);
+Route::apiResource('transactions.chunks', 'Transaction\TransactionChunkController', ['only' =>['index']]);
 Route::apiResource('transactions.workplaces', 'Transaction\TransactionWorkplaceController', ['only' =>['index']]);
 Route::apiResource('transactions.units', 'Transaction\TransactionUnitController', ['only' =>['index']]);
-Route::apiResource('transactions.users.chunks', 'Transaction\TransactionUserChunkController', ['only' =>['store', 'update']]);
+Route::apiResource('transactions.users.chunks', 'Transaction\TransactionUserChunkController', ['only' =>['store', 'update', 'destroy']]);
 
 
 
@@ -41,7 +41,7 @@ Route::apiResource('transactions.users.chunks', 'Transaction\TransactionUserChun
 **/
 Route::apiResource('equipments', 'Equipment\EquipmentController', ['except' =>['create', 'edit']]);
 Route::apiResource('equipments.transactions', 'Equipment\EquipmentTransactionController', ['only' =>['index']]);
-Route::apiResource('equipments.workplaces', 'Equipment\EquipmentWorkplaceController', ['except' =>['create', 'edit']]);
+Route::apiResource('equipments.workplaces', 'Equipment\EquipmentWorkplaceController', ['only' =>['index', 'update', 'destroy']]);
 
 
 /**
@@ -69,7 +69,7 @@ Route::apiResource('users.workplaces', 'User\UserWorkplaceController', ['only' =
 /**
 *Chunks
 **/
-Route::apiResource('chunks', 'Chunk\ChunkController', ['except' =>['create', 'edit']]);
+Route::apiResource('chunks', 'Chunk\ChunkController', ['only' =>['index', 'show']]);
 Route::apiResource('chunks.transactions', 'Chunk\ChunkTransactionController', ['only' =>['index']]);
 Route::apiResource('chunks.users', 'Chunk\ChunkUserController', ['only' =>['index']]);
 

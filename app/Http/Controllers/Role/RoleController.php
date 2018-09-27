@@ -29,7 +29,7 @@ class RoleController extends ApiController
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|alpha_num|min:2|max:50'
+            'name' => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50'
         ];
 
         $this->validate($request, $rules);
@@ -58,7 +58,7 @@ class RoleController extends ApiController
     public function update(Request $request, Role $role)
     {
        $rules = [
-           'name' => 'alpha_num|min:2|max:50'
+           'name' => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50'
        ];
        $this->validate($request, $rules);
 

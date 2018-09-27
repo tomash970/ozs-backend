@@ -31,7 +31,7 @@ class UserTransactionController extends ApiController
     {
 
         $rules = [
-            'worker_name'    => 'required|alpha_num|min:2|max:50',  
+            'worker_name'    => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',  
             'workplace_id'   => 'required|integer',
         ];
 
@@ -79,7 +79,7 @@ class UserTransactionController extends ApiController
     {   
 
         $rules = [
-            'worker_name'    => 'alpha_num|min:2|max:50',  
+            'worker_name'    => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',  
             'confirmation'   => 'boolean',
             'order_accepted' => 'boolean',
             'workplace_id'   => 'integer',
@@ -87,7 +87,7 @@ class UserTransactionController extends ApiController
 
         $this->validate($request, $rules);
 
-        if (($request->has('worker_name') || $request->has('workplace_id'))) {
+        if ($request->has('worker_name') || $request->has('workplace_id')) {
             if (!$user->roles->contains('name', 'boss')) {
                return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
             }

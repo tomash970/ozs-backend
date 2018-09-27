@@ -19,8 +19,8 @@ class Chunk extends Model
     const EXCEPTIONAL   = '0';
     const EXTRAORDINARY = '1';
 
-    const OBTAINED     = '0';
-    const NOT_OBTAINED = '1';
+    const OBTAINED     = '1';
+    const NOT_OBTAINED = '0';
     
     protected $dates = ['deleted_at'];
     protected $fillable = [

@@ -28,17 +28,7 @@ class TransactionUserChunkController extends ApiController
      */
     public function store(Request $request, Transaction $transaction, Chunk $chunk, User $user)
     {
-
-        // 'transaction_id',
-        // 'equipment_id',
-        // 'status',
-        // 'quantity',
-        // 'responsibility',
-        // 'first_use_date',
-        // 'last_use_date',
-        // 'obtained',
         $rules = [
-            //'transaction_id'  => 'required|integer',
             'equipment_id'    => 'required|integer',
             'status'          => 'in:' . Chunk::EXCEPTIONAL . ',' . Chunk::EXTRAORDINARY,
             'quantity'        => 'required|integer',
@@ -48,6 +38,8 @@ class TransactionUserChunkController extends ApiController
             'last_use_date'   => 'required_if:status,' . Chunk::EXTRAORDINARY . '|date',
             'obtained'        => 'in:' . Chunk::OBTAINED  . ',' . Chunk::NOT_OBTAINED,
         ];
+
+        $this->validate($request, $rules);
 
         if ($user->id != $transaction->user_id) {
            return $this->errorResponse('You have no valid role to perform action on this model!', 409);
@@ -61,7 +53,7 @@ class TransactionUserChunkController extends ApiController
             return $this->errorResponse('The user role is not valid for this transaction!', 409);
         }
 
-        $this->validate($request, $rules);
+        
 
         $data = $request->all();
         //$data['responsibility'] = Chunk::NO_RESPONSIBILITY;
@@ -91,9 +83,46 @@ class TransactionUserChunkController extends ApiController
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, Transaction $transaction, User $user, Chunk $chunk)
     {
-        //
+        $rules = [
+            'equipment_id'    => 'integer',
+            'status'          => 'in:' . Chunk::EXCEPTIONAL . ',' . Chunk::EXTRAORDINARY,
+            'quantity'        => 'integer',
+            'responsibility'  => 'required_if:status,' . Chunk::EXTRAORDINARY . '|
+                                  in:' . Chunk::NO_RESPONSIBILITY . ',' . Chunk::PARTIAL_RESPONSIBILITY . ',' . Chunk::FULL_RESPONSIBILITY,
+            'first_use_date'  => 'required_if:status,' . Chunk::EXTRAORDINARY . '|date',
+            'last_use_date'   => 'required_if:status,' . Chunk::EXTRAORDINARY . '|date',
+            'obtained'        => 'in:' . Chunk::OBTAINED  . ',' . Chunk::NOT_OBTAINED,
+        ];
+
+        $this->validate($request, $rules);
+
+        if ($request->has('obtained')) {
+            if (!$user->roles->contains('name', 'obtainer')) {
+               return $this->errorResponse('You have no valid role (obtainer) to perform action on this model!', 409);
+            }
+
+            $chunk->fill($request->only(['obtained']));
+            
+        }
+
+        if ($request->has('equipment_id') || $request->has('status')|| $request->has('quantity') || $request->has('responsibility') || $request->has('first_use_date') || $request->has('last_use_date')) {
+            if (!$user->roles->contains('name', 'boss')) {
+               return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
+            }
+          
+            $chunk->fill($request->except(['obtained'])); 
+
+        }
+
+        if ($chunk->isClean()) {
+            return $this->errorResponse('You need to specify new value to update!', 422);
+        }
+
+        $chunk->save();
+        return $this->showOne($chunk); 
+
     }
 
     /**
@@ -102,9 +131,14 @@ class TransactionUserChunkController extends ApiController
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction, User $user, Chunk $chunk)
     {
-        //
+            if ($user->id != $transaction->user_id) {
+               return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
+            }
+        $chunk->delete();
+
+        return $this->showOne($chunk);
     }
     
 }
