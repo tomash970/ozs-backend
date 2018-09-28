@@ -21,16 +21,6 @@ class UserController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,19 +29,19 @@ class UserController extends ApiController
     public function store(Request $request)
     {
        $rules  = [
-            'name' => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
-            'email' => 'required|email|unique:users|max:50',
+            'name'     => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'email'    => 'required|email|unique:users|max:50',
             'password' => 'required|min:6|confirmed',
-            'unit_id' => 'required',
+            'unit_id'  => 'required|integer',
         ];
 
         $this->validate($request, $rules);
 
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
-        $data['verified'] = User::UNVERIFIED_USER;
+        $data['password']           = bcrypt($request->password);
+        $data['verified']           = User::UNVERIFIED_USER;
         $data['verification_token'] = User::generateVerificationCode();
-        $data['admin'] = User::REGULAR_USER;
+        $data['admin']              = User::REGULAR_USER;
         
         $user = User::create($data);
         return $this->showOne($user, 201);
@@ -80,23 +70,21 @@ class UserController extends ApiController
 
 
         $rules = [
-            'name' => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
-            'email' => 'email|unique:users,email,' . $user->id,
+            'name'     => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'email'    => 'email|unique:users,email,' . $user->id,
             'password' => 'min:6|confirmed',
-            'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
+            'admin'    => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
         ];
         $this->validate($request, $rules);
 
-         if($request->has('name')){
+        if($request->has('name')){
             $user->name = $request->name;
         }
-
-        
         
         if($request->has('email') && $user->email != $request->email){
-            $user->verified = User::UNVERIFIED_USER;
+            $user->verified           = User::UNVERIFIED_USER;
             $user->verification_token = User::generateVerificationCode();
-            $user->email = $request->email;
+            $user->email              = $request->email;
         }
         
         if($request->has('password') ){

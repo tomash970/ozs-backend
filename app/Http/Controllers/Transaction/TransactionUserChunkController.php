@@ -10,16 +10,7 @@ use Illuminate\Http\Request;
 
 class TransactionUserChunkController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-  
+
      /**
      * Store a newly created resource in storage.
      *
@@ -66,17 +57,6 @@ class TransactionUserChunkController extends ApiController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Transaction $transaction)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -107,7 +87,7 @@ class TransactionUserChunkController extends ApiController
             
         }
 
-        if ($request->has('equipment_id') || $request->has('status')|| $request->has('quantity') || $request->has('responsibility') || $request->has('first_use_date') || $request->has('last_use_date')) {
+        if ($request->has('equipment_id') || $request->has('status') || $request->has('quantity') || $request->has('responsibility') || $request->has('first_use_date') || $request->has('last_use_date')) {
             if (!$user->roles->contains('name', 'boss')) {
                return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
             }

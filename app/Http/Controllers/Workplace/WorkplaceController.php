@@ -59,8 +59,8 @@ class WorkplaceController extends ApiController
     public function update(Request $request, Workplace $workplace)
     {
         $rules = [
-            'name'            => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
-            'specific_number' => 'required|integer|digits:6',
+            'name'            => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
+            'specific_number' => 'integer|digits:6',
         ];
 
         $this->validate($request, $rules);

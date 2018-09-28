@@ -20,4 +20,15 @@ class TransactionController extends ApiController
         return $this->showAll($transactions);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Transaction $transaction)
+    {
+        return $this->showOne($transaction);
+    }
+
 }
