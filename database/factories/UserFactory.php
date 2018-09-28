@@ -43,11 +43,15 @@ $factory->define(Position::class, function (Faker $faker) {
 });
 
 $factory->define(User::class, function (Faker $faker) {
-	$unit = Unit::all()->random();
-	$position = Position::all()->random();
+	$unit       = Unit::all()->random();
+	$position   = Position::all()->random();
+  $first_name = $faker->firstName;
+  $last_name  = $faker->lastName;
 
     return [
-        'name'               => $faker->name,
+        'first_name'         => $first_name,
+        'last_name'          => $last_name,
+        'name'               => $first_name . ' ' . $last_name,
         'email'              => $faker->unique()->safeEmail,
         'password'           => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token'     => str_random(10),
@@ -83,6 +87,8 @@ $factory->define(Transaction::class, function (Faker $faker) {
 
   $user      = User::all()->random();
 	$workplace = Workplace::all()->random();
+  $worker_first_name = $faker->firstName;
+  $worker_last_name  = $faker->lastName;
 
 	$confirm_faker = $faker->randomElement([
                                           Transaction::CONFIRMED, 
@@ -94,11 +100,13 @@ $factory->define(Transaction::class, function (Faker $faker) {
                                          ]);
 		
     return [
-    	'worker_name'    => $faker->name,
-    	'user_id'        => $user->id,
-      'workplace_id'   => $workplace->id,
-      'confirmation'   => $confirm_faker,
-      'order_accepted' => $order_faker,
+    	'worker_first_name' => $worker_first_name,
+      'worker_last_name'  => $worker_last_name,
+      'worker_name'       => $worker_first_name . ' ' . $worker_last_name,
+    	'user_id'           => $user->id,
+      'workplace_id'      => $workplace->id,
+      'confirmation'      => $confirm_faker,
+      'order_accepted'    => $order_faker,
 
     ];
 });

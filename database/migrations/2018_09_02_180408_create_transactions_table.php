@@ -16,6 +16,8 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('worker_name');
+            $table->string('worker_first_name');
+            $table->string('worker_last_name');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('workplace_id');
             $table->unsignedInteger('confirmation');

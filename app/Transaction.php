@@ -21,7 +21,9 @@ class Transaction extends Model
     
     protected $dates = ['deleted_at'];
     protected $fillable =[	  
-		'worker_name',  
+		'worker_name', 
+        'worker_first_name',
+        'worker_last_name',
 		'user_id',
         'confirmation',
         'order_accepted',
