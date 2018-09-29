@@ -64,6 +64,8 @@ Route::apiResource('users.positions', 'User\UserPositionController', ['only' =>[
 Route::apiResource('users.roles', 'User\UserRoleController', ['only' =>['index']]);
 Route::apiResource('users.chunks', 'User\UserChunkController', ['only' =>['index']]);
 Route::apiResource('users.workplaces', 'User\UserWorkplaceController', ['only' =>['index']]);
+Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');
+Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
 
 
 /**

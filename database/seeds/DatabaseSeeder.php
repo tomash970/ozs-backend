@@ -31,6 +31,16 @@ class DatabaseSeeder extends Seeder
         Position::truncate();
         DB::table('equipment_workplace')->truncate();
 
+        User::flushEventListeners();
+        Equipment::flushEventListeners();
+        Transaction::flushEventListeners();
+        Unit::flushEventListeners();
+        Chunk::flushEventListeners();
+        Workplace::flushEventListeners();
+        Role::flushEventListeners();
+        Position::flushEventListeners();
+        
+
 
         $usersQuantity       = 30;
         $unitQuantity        = 12;
