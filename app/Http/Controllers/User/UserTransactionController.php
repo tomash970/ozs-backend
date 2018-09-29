@@ -31,8 +31,10 @@ class UserTransactionController extends ApiController
     {
 
         $rules = [
-            'worker_name'    => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',  
-            'workplace_id'   => 'required|integer',
+            //'worker_name'       => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:60',
+            'worker_first_name' => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30', 
+            'worker_last_name'  => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',   
+            'workplace_id'      => 'required|integer',
         ];
 
         if (!$user->isVerified()) {
@@ -46,6 +48,7 @@ class UserTransactionController extends ApiController
         $this->validate($request, $rules);
 
         $data = $request->all();
+        $data['worker_name']    = $request->worker_first_name . ' ' . $request->worker_last_name;
         $data['confirmation']   = Transaction::NOT_CONFIRMED;
         $data['order_accepted'] = Transaction::NOT_ORDER_ACCEPTED;
         $data['user_id']        = $user->id;
@@ -79,22 +82,60 @@ class UserTransactionController extends ApiController
     {   
 
         $rules = [
-            'worker_name'    => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',  
-            'confirmation'   => 'boolean',
-            'order_accepted' => 'boolean',
-            'workplace_id'   => 'integer',
+            'worker_frist_name' => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30', 
+            'worker_worker_last_name'  => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',   
+            'confirmation'      => 'boolean',
+            'order_accepted'    => 'boolean',
+            'workplace_id'      => 'integer',
         ];
 
         $this->validate($request, $rules);
 
-        if ($request->has('worker_name') || $request->has('workplace_id')) {
+
+
+        if ($request->has('worker_first_name') || $request->has('worker_last_name') || $request->has('workplace_id')) {
             if (!$user->roles->contains('name', 'boss')) {
                return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
             }
-          
-            $transaction->fill($request->only(['worker_name', 'workplace_id'])); 
+
+
+            if ($request->has('workplace_id')) {
+                $transaction->workplace_id = $request->workplace_id;
+            }
+
+            if(!$request->has('worker_first_name') && $request->has('worker_last_name')){
+                $transaction->worker_name       = $transaction->worker_first_name . ' ' . $request->worker_last_name;
+                $transaction->worker_last_name  = $request->worker_last_name;
+            }
+
+            if($request->has('worker_first_name') && !$request->has('worker_last_name')){
+                $transaction->worker_name = $request->worker_first_name . ' ' . $transaction->worker_last_name;
+                $transaction->worker_first_name = $request->worker_first_name;
+            }
+
+            if($request->has('worker_first_name') && $request->has('worker_last_name')){
+                $transaction->worker_name = $request->worker_first_name . ' ' . $request->worker_last_name;
+                $transaction->worker_first_name = $request->worker_first_name;
+                $transaction->worker_last_name  = $request->worker_last_name;
+            }
+
+
+
+
+            // $transactions->worker_name = $request->worker_worker_first_name . ' ' . $request->worker_worker_last_name;
+            // $transactions->worker_worker_first_name = $request->worker_worker_first_name;
+            // $transactions->worker_worker_last_name  = $request->worker_worker_last_name;
+            //$transaction->fill($request->only(['worker_name', 'workplace_id'])); 
 
         }
+
+        // if ($request->has('workplace_id')) {
+        //     if (!$user->roles->contains('name', 'boss')) {
+        //        return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
+        //     }
+        //     $transaction->fill($request->only(['workplace_id'])); 
+
+        // }
 
         if ($request->has('order_accepted')) {
             if (!$user->roles->contains('name', 'obtainer')) {

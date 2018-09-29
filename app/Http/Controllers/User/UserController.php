@@ -29,15 +29,18 @@ class UserController extends ApiController
     public function store(Request $request)
     {
        $rules  = [
-            'name'     => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
-            'email'    => 'required|email|unique:users|max:50',
-            'password' => 'required|min:6|confirmed',
-            'unit_id'  => 'required|integer',
+            //'name'       => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:60',
+            'first_name' => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'last_name'  => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'email'      => 'required|email|unique:users|max:50',
+            'password'   => 'required|min:6|confirmed',
+            'unit_id'    => 'required|integer',
         ];
 
         $this->validate($request, $rules);
 
-        $data = $request->all();
+        $data = $request->all(); 
+        $data['name']               = $request->first_name . ' ' . $request->last_name;
         $data['password']           = bcrypt($request->password);
         $data['verified']           = User::UNVERIFIED_USER;
         $data['verification_token'] = User::generateVerificationCode();
@@ -70,15 +73,31 @@ class UserController extends ApiController
 
 
         $rules = [
-            'name'     => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:50',
-            'email'    => 'email|unique:users,email,' . $user->id,
-            'password' => 'min:6|confirmed',
-            'admin'    => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
+            //'name'       => 'regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:60',
+            'first_name' => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'last_name'  => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'email'      => 'email|unique:users,email,' . $user->id,
+            'password'   => 'min:6|confirmed',
+            'admin'      => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
         ];
         $this->validate($request, $rules);
 
-        if($request->has('name')){
-            $user->name = $request->name;
+        if(!$request->has('first_name') && $request->has('last_name')){
+            $user->name       = $user->first_name . ' ' . $request->last_name;
+            //$user->first_name = $request->first_name;
+            $user->last_name  = $request->last_name;
+        }
+
+        if($request->has('first_name') && !$request->has('last_name')){
+            $user->name = $request->first_name . ' ' . $user->last_name;
+            $user->first_name = $request->first_name;
+            //$user->last_name  = $request->last_name;
+        }
+
+        if($request->has('first_name') && $request->has('last_name')){
+            $user->name = $request->first_name . ' ' . $request->last_name;
+            $user->first_name = $request->first_name;
+            $user->last_name  = $request->last_name;
         }
         
         if($request->has('email') && $user->email != $request->email){
