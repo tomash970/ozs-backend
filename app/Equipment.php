@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Chunk;
+use App\Transformers\EquipmentTransformer;
 use App\Workplace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,9 @@ class Equipment extends Model
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
+
+    public $transformer = EquipmentTransformer::class;
+
     protected $fillable = [
     	'name',
     	'specific_number',

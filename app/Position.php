@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Transaction;
+use App\Transformers\PositionTransformer;
 use App\Unit;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,9 @@ class Position extends Model
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
+
+    public $transformer = PositionTransformer::class;
+
     protected $fillable =[	  
 		'name',  
     ];

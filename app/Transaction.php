@@ -4,6 +4,7 @@ namespace App;
 
 use App\Chunk;
 use App\Equipment;
+use App\Transformers\TransactionTransformer;
 use App\Unit;
 use App\Workplace;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,9 @@ class Transaction extends Model
     const NOT_ORDER_ACCEPTED = '0';
     
     protected $dates = ['deleted_at'];
+
+    public $transformer = TransactionTransformer::class;
+
     protected $fillable =[	  
 		'worker_name', 
         'worker_first_name',

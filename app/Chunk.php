@@ -4,6 +4,7 @@ namespace App;
 
 use App\Equipment;
 use App\Transaction;
+use App\Transformers\ChunkTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -21,6 +22,8 @@ class Chunk extends Model
 
     const OBTAINED     = '1';
     const NOT_OBTAINED = '0';
+
+    public $transformer = ChunkTransformer::class;
     
     protected $dates = ['deleted_at'];
     protected $fillable = [
