@@ -22,4 +22,18 @@ class PositionTransformer extends TransformerAbstract
             'deletedDate'  => isset($position->deleted_at) ? (string) $position->deleted_at : null,
         ];
     }
+
+     public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier'   => 'id',
+            'title'        => 'name',
+            'creationDate' => 'created_at',
+            'lastChange'   => 'updated_at',
+            'deletedDate'  => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

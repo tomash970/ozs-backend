@@ -25,4 +25,21 @@ class EquipmentTransformer extends TransformerAbstract
             'deletedDate'       => isset($equipment->deleted_at) ? (string) $equipment->deleted_at : null,
         ];
     }
+
+     public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier'        => 'id',
+            'equipmentName'     => 'name',
+            'equipmentCode'     => 'specific_number',
+            'equipmentSizes'    => 'size_json', 
+            'equipmentDocument' => 'rules_paper',
+            'creationDate'      => 'created_at',
+            'lastChange'        => 'updated_at',
+            'deletedDate'       => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

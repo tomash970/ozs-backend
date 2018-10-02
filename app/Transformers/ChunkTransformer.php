@@ -29,4 +29,25 @@ class ChunkTransformer extends TransformerAbstract
             'deletedDate'           => isset($chunk->deleted_at) ? (string) $chunk->deleted_at : null,
         ];
     }
+
+     public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier'            => 'id',
+            'transactionIdentifier' => 'transaction_id',
+            'equipmentIdentifier'   => 'equipment_id',
+            'tansactionType'        => 'status', 
+            'numOfPieces'           => 'quantity',
+            'responsibility'        => 'responsibility',
+            'acquireDate'           => 'first_use_date',
+            'scatterDate'           => 'last_use_date',
+            'obtainedPiece'         => 'obtained',
+            'creationDate'          => 'created_at',
+            'lastChange'            => 'updated_at',
+            'deletedDate'           => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
