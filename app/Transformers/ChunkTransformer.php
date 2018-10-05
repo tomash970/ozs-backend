@@ -27,6 +27,25 @@ class ChunkTransformer extends TransformerAbstract
             'creationDate'          => (string)$chunk->created_at,
             'lastChange'            => (string)$chunk->updated_at,
             'deletedDate'           => isset($chunk->deleted_at) ? (string) $chunk->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('chunks.show', $chunk->id),
+                ],
+                [
+                    'rel' => 'chunk.equipments',
+                    'href' => route('chunks.equipments.index', $chunk->id),
+                ],
+                [
+                    'rel' => 'chunk.transactions',
+                    'href' => route('chunks.transactions.index', $chunk->id),
+                ],
+                [
+                    'rel' => 'chunk.users',
+                    'href' => route('chunks.users.index', $chunk->id),
+                ],
+            ]
         ];
     }
 

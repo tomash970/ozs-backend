@@ -20,6 +20,25 @@ class PositionTransformer extends TransformerAbstract
             'creationDate' => (string)$position->created_at,
             'lastChange'   => (string)$position->updated_at,
             'deletedDate'  => isset($position->deleted_at) ? (string) $position->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('positions.show', $position->id),
+                ],
+                [
+                    'rel' => 'position.transactions',
+                    'href' => route('positions.transactions.index', $position->id),
+                ],
+                [
+                    'rel' => 'position.units',
+                    'href' => route('positions.units.index', $position->id),
+                ],
+                [
+                    'rel' => 'position.users',
+                    'href' => route('positions.users.index', $position->id),
+                ],
+            ]
         ];
     }
 

@@ -26,6 +26,33 @@ class TransactionTransformer extends TransformerAbstract
             'creationDate'        => (string)$transaction->created_at,
             'lastChange'          => (string)$transaction->updated_at,
             'deletedDate'         => isset($transaction->deleted_at) ? (string) $transaction->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('transactions.show', $transaction->id),
+                ],
+                [
+                    'rel' => 'transaction.equipments',
+                    'href' => route('transactions.equipments.index', $transaction->id),
+                ],
+                [
+                    'rel' => 'transaction.chunks',
+                    'href' => route('transactions.chunks.index', $transaction->id),
+                ],
+                [
+                    'rel' => 'transaction.units',
+                    'href' => route('transactions.units.index', $transaction->id),
+                ],
+                [
+                    'rel' => 'user',
+                    'href' => route('users.show', $transaction->user_id),
+                ],
+                [
+                    'rel' => 'workplace',
+                    'href' => route('workplaces.show', $transaction->workplace_id),
+                ],
+            ]
         ];
     }
 

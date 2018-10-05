@@ -74,6 +74,7 @@ Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
 Route::apiResource('chunks', 'Chunk\ChunkController', ['only' =>['index', 'show']]);
 Route::apiResource('chunks.transactions', 'Chunk\ChunkTransactionController', ['only' =>['index']]);
 Route::apiResource('chunks.users', 'Chunk\ChunkUserController', ['only' =>['index']]);
+Route::apiResource('chunks.equipments', 'Chunk\ChunkEquipmentController', ['only' =>['index']]);
 
 
 /**

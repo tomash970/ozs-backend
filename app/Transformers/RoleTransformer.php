@@ -20,6 +20,25 @@ class RoleTransformer extends TransformerAbstract
             'creationDate' => (string)$role->created_at,
             'lastChange'   => (string)$role->updated_at,
             'deletedDate'  => isset($role->deleted_at) ? (string) $role->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('roles.show', $role->id),
+                ],
+                [
+                    'rel' => 'role.positions',
+                    'href' => route('roles.positions.index', $role->id),
+                ],
+                [
+                    'rel' => 'role.units',
+                    'href' => route('roles.units.index', $role->id),
+                ],
+                [
+                    'rel' => 'role.users',
+                    'href' => route('roles.users.index', $role->id),
+                ],
+            ]
         ];
     }
 

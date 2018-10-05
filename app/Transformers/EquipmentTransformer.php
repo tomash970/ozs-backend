@@ -23,6 +23,21 @@ class EquipmentTransformer extends TransformerAbstract
             'creationDate'      => (string)$equipment->created_at,
             'lastChange'        => (string)$equipment->updated_at,
             'deletedDate'       => isset($equipment->deleted_at) ? (string) $equipment->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('equipments.show', $equipment->id),
+                ],
+                [
+                    'rel' => 'equipment.transactions',
+                    'href' => route('equipments.transactions.index', $equipment->id),
+                ],
+                [
+                    'rel' => 'equipment.workplaces',
+                    'href' => route('equipments.workplaces.index', $equipment->id),
+                ],
+            ]
         ];
     }
 

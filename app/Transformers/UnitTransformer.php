@@ -23,6 +23,29 @@ class UnitTransformer extends TransformerAbstract
             'creationDate' => (string)$unit->created_at,
             'lastChange'   => (string)$unit->updated_at,
             'deletedDate'  => isset($unit->deleted_at) ? (string) $unit->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('units.show', $unit->id),
+                ],
+                [
+                    'rel' => 'unit.positions',
+                    'href' => route('units.positions.index', $unit->id),
+                ],
+                [
+                    'rel' => 'unit.chunks',
+                    'href' => route('units.chunks.index', $unit->id),
+                ],
+                [
+                    'rel' => 'unit.transactions',
+                    'href' => route('units.transactions.index', $unit->id),
+                ],
+                [
+                    'rel' => 'unit.users',
+                    'href' => route('units.users.index', $unit->id),
+                ],
+            ]
         ];
     }
 

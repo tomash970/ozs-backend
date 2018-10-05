@@ -21,7 +21,31 @@ class WorkplaceTransformer extends TransformerAbstract
             'creationDate'  => (string)$workplace->created_at,
             'lastChange'    => (string)$workplace->updated_at,
             'deletedDate'   => isset($workplace->deleted_at) ? (string) $workplace->deleted_at : null,
+            
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('workplaces.show', $workplace->id),
+                ],
+                [
+                    'rel' => 'workplace.equipments',
+                    'href' => route('workplaces.equipments.index', $workplace->id),
+                ],
+                [
+                    'rel' => 'workplace.transactions',
+                    'href' => route('workplaces.transactions.index', $workplace->id),
+                ],
+                [
+                    'rel' => 'workplace.units',
+                    'href' => route('workplaces.units.index', $workplace->id),
+                ],
+                [
+                    'rel' => 'workplace.users',
+                    'href' => route('workplaces.users.index', $workplace->id),
+                ],
+            ]
         ];
+
     }
 
     public static function originalAttribute($index)
