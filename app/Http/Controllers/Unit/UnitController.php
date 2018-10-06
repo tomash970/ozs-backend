@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Unit;
 
+use App\Http\Controllers\ApiController;
+use App\Transformers\UnitTransformer;
 use App\Unit;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
 
 class UnitController extends ApiController
 {
+
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->middleware('transform.input:' . UnitTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *

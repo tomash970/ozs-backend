@@ -49,7 +49,7 @@ class ChunkTransformer extends TransformerAbstract
         ];
     }
 
-     public static function originalAttribute($index)
+    public static function originalAttribute($index)
     {
         $attributes = [
             'identifier'            => 'id',
@@ -64,6 +64,27 @@ class ChunkTransformer extends TransformerAbstract
             'creationDate'          => 'created_at',
             'lastChange'            => 'updated_at',
             'deletedDate'           => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+            'id'             => 'identifier',
+            'transaction_id' => 'transactionIdentifier',
+            'equipment_id'   => 'equipmentIdentifier',
+            'status'         => 'tansactionType', 
+            'quantity'       => 'numOfPieces',
+            'responsibility' => 'responsibility',
+            'first_use_date' => 'acquireDate',
+            'last_use_date'  => 'scatterDate',
+            'obtained'       => 'obtainedPiece',
+            'created_at'     => 'creationDate',
+            'updated_at'     => 'lastChange',
+            'deleted_at'     => 'deletedDate',
 
         ];
 

@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Equipment;
 
 use App\Equipment;
 use App\Http\Controllers\ApiController;
+use App\Transformers\EquipmentTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class EquipmentController extends ApiController
 {
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->middleware('transform.input:' . EquipmentTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *

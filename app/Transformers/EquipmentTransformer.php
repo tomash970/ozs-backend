@@ -41,7 +41,7 @@ class EquipmentTransformer extends TransformerAbstract
         ];
     }
 
-     public static function originalAttribute($index)
+    public static function originalAttribute($index)
     {
         $attributes = [
             'identifier'        => 'id',
@@ -52,6 +52,23 @@ class EquipmentTransformer extends TransformerAbstract
             'creationDate'      => 'created_at',
             'lastChange'        => 'updated_at',
             'deletedDate'       => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [ 
+         'id'              => 'identifier',
+         'name'            => 'equipmentName',
+         'specific_number' => 'equipmentCode',
+         'size_json'       => 'equipmentSizes', 
+         'rules_paper'     => 'equipmentDocument',
+         'created_at'      => 'creationDate',
+         'updated_at'      => 'lastChange',
+         'deleted_at'      => 'deletedDate',
 
         ];
 

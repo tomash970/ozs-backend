@@ -5,11 +5,19 @@ namespace App\Http\Controllers\Transaction;
 use App\Chunk;
 use App\Http\Controllers\ApiController;
 use App\Transaction;
+use App\Transformers\TransactionTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
 class TransactionUserChunkController extends ApiController
 {
+
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store', 'update']);
+    }
 
      /**
      * Store a newly created resource in storage.

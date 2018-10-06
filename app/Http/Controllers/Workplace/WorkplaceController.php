@@ -3,11 +3,20 @@
 namespace App\Http\Controllers\Workplace;
 
 use App\Http\Controllers\ApiController;
+use App\Transformers\WorkplaceTransformer;
 use App\Workplace;
 use Illuminate\Http\Request;
 
 class WorkplaceController extends ApiController
 {
+
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->middleware('transform.input:' . WorkplaceTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
