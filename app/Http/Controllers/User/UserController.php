@@ -40,11 +40,12 @@ class UserController extends ApiController
     {
        $rules  = [
             //'name'       => 'required|regex:/(^([a-žA-Ž ]+)(\d+)?$)/u|min:2|max:60',
-            'first_name' => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
-            'last_name'  => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
-            'email'      => 'required|email|unique:users|max:50',
-            'password'   => 'required|min:6|confirmed',
-            'unit_id'    => 'required|integer',
+            'first_name'  => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'last_name'   => 'required|regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',
+            'email'       => 'required|email|unique:users|max:50',
+            'password'    => 'required|min:6|confirmed',
+            'unit_id'     => 'required|integer',
+            'position_id' => 'required|integer',
         ];
 
         $this->validate($request, $rules);
@@ -128,8 +129,12 @@ class UserController extends ApiController
             $user->admin = $request->admin;
         }
 
-          if($request->has('unit_id')){
+        if($request->has('unit_id')){
             $user->unit_id = $request->unit_id;
+        }
+
+        if($request->has('position_id')){
+            $user->position_id = $request->position_id;
         }
         
         

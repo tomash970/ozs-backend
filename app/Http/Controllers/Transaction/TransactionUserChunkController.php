@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transaction;
 use App\Chunk;
 use App\Http\Controllers\ApiController;
 use App\Transaction;
+use App\Transformers\ChunkTransformer;
 use App\Transformers\TransactionTransformer;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TransactionUserChunkController extends ApiController
     {
       parent::__construct();
 
-      $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store', 'update']);
+      $this->middleware('transform.input:' . ChunkTransformer::class)->only(['store', 'update']);
     }
 
      /**

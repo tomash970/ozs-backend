@@ -52,6 +52,7 @@ class EquipmentTransformer extends TransformerAbstract
             'creationDate'      => 'created_at',
             'lastChange'        => 'updated_at',
             'deletedDate'       => 'deleted_at',
+            //'_method'           => '_method',
 
         ];
 
@@ -64,7 +65,7 @@ class EquipmentTransformer extends TransformerAbstract
          'id'              => 'identifier',
          'name'            => 'equipmentName',
          'specific_number' => 'equipmentCode',
-         'size_json'       => 'equipmentSizes', 
+         'size_json'       => 'equipmentSizes',
          'rules_paper'     => 'equipmentDocument',
          'created_at'      => 'creationDate',
          'updated_at'      => 'lastChange',

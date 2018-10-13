@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Transformers\originalAttribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;

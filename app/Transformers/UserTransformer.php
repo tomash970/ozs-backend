@@ -16,28 +16,17 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'identifier'         => (int)$user->id,
-            'fullName'           => $user->name,
-            'firstName'          => $user->first_name,
-            'lastName'           => $user->last_name,
-            'email'              => $user->email,
+            'fullName'           => (string)$user->name,
+            'firstName'          => (string)$user->first_name,
+            'lastName'           => (string)$user->last_name,
+            'email'              => (string)$user->email,
             'isVerified'         => (int)$user->verified,
             'isAdmin'            => ($user->admin === 'true'),
             'unitIdentifier'     => (int)$user->unit_id,
             'positionIdentifier' => (int)$user->position_id,
-            'creationDate'       => $user->created_at,
-            'lastChange'         => $user->updated_at,
-            'deletedDate'        => isset($user->deleted_at) ? $user->deleted_at : null,
-
-        // 'name', 
-        // 'first_name',
-        // 'last_name',
-        // 'email', 
-        // 'password',
-        // 'verified',
-        // 'verification_token',
-        // 'admin',
-        // 'unit_id',
-        // 'position_id'
+            'creationDate'       => (string)$user->created_at,
+            'lastChange'         => (string)$user->updated_at,
+            'deletedDate'        => isset($user->deleted_at) ? (string)$user->deleted_at : null,
 
             'links' => [
                 [
@@ -75,43 +64,43 @@ class UserTransformer extends TransformerAbstract
     public static function originalAttribute($index)
     {
         $attributes = [
-            'identifier'         => 'id',
-            'fullName'           => 'name',
-            'firstName'          => 'first_name',
-            'lastName'           => 'last_name',
-            'email'              => 'email',
-            'password'           => 'password',
+            'identifier'            => 'id',
+            'fullName'              => 'name',
+            'firstName'             => 'first_name',
+            'lastName'              => 'last_name',
+            'email'                 => 'email',
+            'password'              => 'password',
             'password_confirmation' => 'password_confirmation',
-            'isVerified'         => 'verified',
-            'isAdmin'            => 'admin',
-            'unitIdentifier'     => 'unit_id',
-            'positionIdentifier' => 'position_id',
-            'creationDate'       => 'created_at',
-            'lastChange'         => 'updated_at',
-            'deletedDate'        => 'deleted_at',
+            'isVerified'            => 'verified',
+            'isAdmin'               => 'admin',
+            'unitIdentifier'        => 'unit_id',
+            'positionIdentifier'    => 'position_id',
+            'creationDate'          => 'created_at',
+            'lastChange'            => 'updated_at',
+            'deletedDate'           => 'deleted_at',
 
         ];
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 
-        public static function transformedAttribute($index)
+    public static function transformedAttribute($index)
     {
         $attributes = [
-            'id'          => 'identifier',
-            'name'        => 'fullName',
-            'first_name'  => 'firstName',
-            'last_name'   => 'lastName',
-            'email'       => 'email',
-            'password'    => 'password',
+            'id'                    => 'identifier',
+            'name'                  => 'fullName',
+            'first_name'            => 'firstName',
+            'last_name'             => 'lastName',
+            'email'                 => 'email',
+            'password'              => 'password',
             'password_confirmation' => 'password_confirmation',
-            'verified'    => 'isVerified',
-            'admin'       => 'isAdmin',
-            'unit_id'     => 'unitIdentifier',
-            'position_id' => 'positionIdentifier',
-            'created_at'  => 'creationDate',
-            'updated_at'  => 'lastChange',
-            'deleted_at'  => 'deletedDate',
+            'verified'              => 'isVerified',
+            'admin'                 => 'isAdmin',
+            'unit_id'               => 'unitIdentifier',
+            'position_id'           => 'positionIdentifier',
+            'created_at'            => 'creationDate',
+            'updated_at'            => 'lastChange',
+            'deleted_at'            => 'deletedDate',
 
         ];
 

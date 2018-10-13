@@ -20,8 +20,8 @@ class TransactionTransformer extends TransformerAbstract
             'workerFirstName'     => (string)$transaction->worker_first_name,
             'workerLastName'      => (string)$transaction->worker_last_name,
             'userIdentifier'      => (int)$transaction->user_id,
-            'transactionCheck'    => ($transaction->confirmation === 'true'),
-            'transactionAccepted' => ($transaction->order_accepted === 'true'),
+            'transactionCheck'    => (int)$transaction->confirmation,
+            'transactionAccepted' => (int)$transaction->order_accepted ,
             'workplaceIdentifier' => (int)$transaction->workplace_id,
             'creationDate'        => (string)$transaction->created_at,
             'lastChange'          => (string)$transaction->updated_at,
@@ -60,9 +60,9 @@ class TransactionTransformer extends TransformerAbstract
     {
         $attributes = [
             'identifier'          => 'id',
-            'fullName'            => 'name',
-            'firstName'           => 'first_name',
-            'lastName'            => 'last_name',
+            'workerFullName'      => 'worker_name',
+            'workerFirstName'     => 'worker_first_name',
+            'workerLastName'      => 'worker_last_name',
             'userIdentifier'      => 'user_id',
             'transactionCheck'    => 'confirmation',
             'transactionAccepted' => 'order_accepted',
@@ -79,17 +79,17 @@ class TransactionTransformer extends TransformerAbstract
     public static function transformedAttribute($index)
     {
         $attributes = [
-            'id'             => 'identifier',
-            'name'           => 'fullName',
-            'first_name'     => 'firstName',
-            'last_name'      => 'lastName',
-            'user_id'        => 'userIdentifier',
-            'confirmation'   => 'transactionCheck',
-            'order_accepted' => 'transactionAccepted',
-            'workplace_id'   => 'workplaceIdentifier',
-            'created_at'     => 'creationDate',
-            'updated_at'     => 'lastChange',
-            'deleted_at'     => 'deletedDate',
+            'id'                => 'identifier',
+            'worker_name'       => 'workerFullName',
+            'worker_first_name' => 'workerFirstName',
+            'worker_last_name'  => 'workerLastName',
+            'user_id'           => 'userIdentifier',
+            'confirmation'      => 'transactionCheck',
+            'order_accepted'    => 'transactionAccepted',
+            'workplace_id'      => 'workplaceIdentifier',
+            'created_at'        => 'creationDate',
+            'updated_at'        => 'lastChange',
+            'deleted_at'        => 'deletedDate',
 
         ];
 

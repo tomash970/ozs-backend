@@ -80,19 +80,23 @@ class EquipmentController extends ApiController
         ];
 
         $this->validate($request, $rules);
-
+//dd($request);
         $equipment->fill($request->only([
             'name' ,
             'specific_number',
             'size_json',
-            //'rules_paper',
         ]));
 
         if ($request->hasFile('rules_paper')) {
             Storage::delete($equipment->rules_paper);
             $equipment->rules_paper = $request->rules_paper->store('');
         }
-
+////////////TRY\\\\\\\\\\\
+        // if ($request->hasFile('equipmentDocument')) {
+        //        Storage::delete($equipment->rules_paper);
+        //        $equipment->rules_paper = $request->equipmentDocument->store('');
+        // }
+////////////END TRY\\\\\\\\\\\
         if ($equipment->isClean()) {
             return $this->errorResponse('You need to specify a different value for update.', 422);
         }

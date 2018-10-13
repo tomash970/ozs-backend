@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
 use App\Transaction;
-use App\Transformers\UserTransformer;
+use App\Transformers\TransactionTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class UserTransactionController extends ApiController
     {
       parent::__construct();
 
-      $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
+      $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store', 'update']);
     }
     /**
      * Display a listing of the resource.
@@ -76,7 +76,7 @@ class UserTransactionController extends ApiController
         if ($user->id != $transaction->user_id) {
            return $this->errorResponse('You have no valid role to perform action on this model!', 409);
         }
-        return $this->showOne($user);
+        return $this->showOne($transaction);
     }
 
     /**
@@ -91,7 +91,7 @@ class UserTransactionController extends ApiController
 
         $rules = [
             'worker_frist_name' => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30', 
-            'worker_worker_last_name'  => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',   
+            'worker_last_name'  => 'regex:/(^([a-žA-Ž -]+)(\d+)?$)/u|min:2|max:30',   
             'confirmation'      => 'boolean',
             'order_accepted'    => 'boolean',
             'workplace_id'      => 'integer',
@@ -106,6 +106,9 @@ class UserTransactionController extends ApiController
                return $this->errorResponse('You have no valid role (boss) to perform action on this model!', 409);
             }
 
+            if ($user->id != $transaction->user_id) {
+               return $this->errorResponse('Only user with credentials for this worker can perform action on this model!', 409);
+            }
 
             if ($request->has('workplace_id')) {
                 $transaction->workplace_id = $request->workplace_id;
