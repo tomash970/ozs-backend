@@ -98,14 +98,4 @@ Route::apiResource('positions.transactions', 'Position\PositionTransactionContro
 /**
 *Manager
 **/
-//Route::apiResource('managers', 'Manager\ManagerController', ['only' =>['index', 'show']]);
-
-/**
-*Obtainer
-**/
-//Route::apiResource('obtainers', 'Obtainer\ObtainerController', ['only' =>['index', 'show']]);
-
-/**
-*Superior
-**/
-//Route::apiResource('superiors', 'Superior\SuperiorController', ['only' =>['index', 'show']]);
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken'); 

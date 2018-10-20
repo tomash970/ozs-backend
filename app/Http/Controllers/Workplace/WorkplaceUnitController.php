@@ -8,6 +8,12 @@ use App\Http\Controllers\ApiController;
 
 class WorkplaceUnitController extends ApiController
 {
+
+    public function __construct()
+    {
+      $this->middleware('client.credentials')->only(['index']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
