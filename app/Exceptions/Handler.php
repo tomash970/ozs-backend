@@ -128,6 +128,7 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        //dd($request);
         if ($this->isFrontend($request)) {
            return redirect()->guest('login');
         }
@@ -155,6 +156,7 @@ class Handler extends ExceptionHandler
 
     protected function isFrontend($request)
     {
+        //dd(collect($request->route()->middleware()));
         return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
         //potrebno razriještiti problem kad se direktno upiše peapi.test/home kod ne redirekta nego daje 401 iz linije 134 što znači da ovaj kod od && ne radi kako treba.Vjerojatno zato što sam stavio u middleware group auth  u web rutingu
     }
