@@ -14,6 +14,7 @@ class UserController extends ApiController
 
     public function __construct()
     {
+      //ovaj je zato što store i resend trebaju pristup dok user nije autoriziran
       $this->middleware('client.credentials')->only(['store', 'resend']);
       $this->middleware('auth:api')->except(['store','verify', 'resend']);
 

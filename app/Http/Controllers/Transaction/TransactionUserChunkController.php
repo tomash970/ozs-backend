@@ -18,6 +18,8 @@ class TransactionUserChunkController extends ApiController
       parent::__construct();
 
       $this->middleware('transform.input:' . ChunkTransformer::class)->only(['store', 'update']);
+      $this->middleware('scope:manage-transactions')->only(['store', 'update']);
+      // $this->middleware('scope:verify-transactions, verify-transactions')->only(['update']);
     }
 
      /**

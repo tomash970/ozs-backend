@@ -29,7 +29,7 @@ class TransformInput
         }
  
         $request->replace($transformedInput);
- dd($request);
+ //dd($request);
         $response = $next($request);
  //dd($response);
         if (isset($response->exception) && $response->exception instanceof ValidationException) {
